@@ -18,7 +18,6 @@ namespace AdventOfCode2023.App.Days
                 Console.WriteLine("Expected file at: " + ProblemInput);
                 throw new Exception("Could not find input file for this day!");
             }
-
             AllLines = File.ReadAllLines(ProblemInput);
 
             if (AllLines == null || AllLines.Length == 0)
@@ -31,24 +30,7 @@ namespace AdventOfCode2023.App.Days
 
         public override void Part1()
         {
-            int SumReturn = 0;
-
-            foreach (string line in AllLines)
-            {
-                Console.WriteLine(line);
-
-                //use regex to replace all letters with nothing
-                string resulst = Regex.Replace(line, "[^0-9]", "");
-                // Console.WriteLine("Becomes " + resulst);
-
-                int FirstNumber = Convert.ToInt32(resulst[0].ToString());
-                int LastNumber = Convert.ToInt32(resulst[resulst.Length - 1].ToString());
-
-                Console.WriteLine("Result: " + FirstNumber + " & " + LastNumber + " = " + Convert.ToInt16(FirstNumber.ToString() + LastNumber.ToString()));
-                SumReturn += Convert.ToInt16(FirstNumber.ToString() + LastNumber.ToString());
-            }
-
-            Console.WriteLine("Total Sum: " + SumReturn);
+            Console.WriteLine("Part1 Answer: " + CalculateResultNumber(AllLines));
             //1#: 6490 is too low
             //2#  35776 is too low
             //3#  54630  - Correct!
@@ -56,12 +38,45 @@ namespace AdventOfCode2023.App.Days
 
         public override void Part2()
         {
+            string[] SumString = new string[AllLines.Length];
 
+            for (int i = 0; i < AllLines.Length; i++)
+            {
+                Console.WriteLine("Line: " + AllLines[i] + " Becomes: " + ConvertAllNumbersToDigitsInString(AllLines[i]));
+                SumString[i] = ConvertAllNumbersToDigitsInString(AllLines[i]);
+            }
 
+            Console.WriteLine("Part2 Answer: " + CalculateResultNumber(SumString));
+            //1# 54014 too low
+            //2#  54520  too low
+            //3#  54770  - Correct!
+        }
+
+        /// <summary>
+        /// Calculate the sum of the first and last number in each line
+        /// </summary>
+        /// <param name="InputString"></param>
+        /// <returns></returns>
+        private string CalculateResultNumber(string[] InputString)
+        {
+            int SumReturn = 0;
+
+            foreach (string line in InputString)
+            {
+                string resulst = Regex.Replace(line, "[^0-9]", "");
+
+                string FirstNumber = resulst[0].ToString();
+                string LastNumber = resulst[resulst.Length - 1].ToString();
+
+                // Console.WriteLine("Result: " + FirstNumber + " & " + LastNumber + " = " + Convert.ToInt16(FirstNumber.ToString() + LastNumber.ToString()));
+                SumReturn += Convert.ToInt16(FirstNumber.ToString() + LastNumber.ToString());
+            }
+
+            return SumReturn.ToString();
 
         }
 
-        private string ConvertAllNumbersToDigitsInString(string InputTextString)
+        private static string ConvertAllNumbersToDigitsInString(string InputTextString)
         {
             Dictionary<string, int> NumberDictionary = new() {
                 { "one", 1 },
@@ -75,16 +90,38 @@ namespace AdventOfCode2023.App.Days
                 { "nine", 9 }
             };
 
+            string ReturnString = "";
 
-            for (int i = 0; i < NumberDictionary.Count; i++)
+            for (int i = 0; i < InputTextString.Length; i++)
             {
-                if (InputTextString.Contains(NumberDictionary.ElementAt(i).Key))
+                if (char.IsDigit(InputTextString[i]))
                 {
-                    InputTextString = InputTextString.Replace(NumberDictionary.ElementAt(i).Key, NumberDictionary.ElementAt(i).Value.ToString());
+                    ReturnString += InputTextString[i].ToString();
+                    continue;
                 }
+
+                if (char.IsLetter(InputTextString[i]))
+                {
+                    for (int Y = 0; Y < NumberDictionary.Count; Y++)
+                    {
+                        if (i + NumberDictionary.ElementAt(Y).Key.Length > InputTextString.Length)
+                        {
+                            continue;
+                        }
+
+                        if (InputTextString.Substring(i, NumberDictionary.ElementAt(Y).Key.Length).ToLower() == NumberDictionary.ElementAt(Y).Key)
+                        {
+                            ReturnString += NumberDictionary.ElementAt(Y).Value.ToString();
+                            i += 1;
+                            continue;
+                        }
+
+                    }
+                }
+                ReturnString += InputTextString[i].ToString();
             }
 
-            return InputTextString;
+            return ReturnString;
 
         }
     }

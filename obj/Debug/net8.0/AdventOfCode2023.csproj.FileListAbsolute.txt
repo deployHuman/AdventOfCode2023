@@ -26,3 +26,4 @@ C:\Storage\jobbmaterial\Dev\AdventOfCode2023\obj\Debug\net8.0\refint\AdventOfCod
 C:\Storage\jobbmaterial\Dev\AdventOfCode2023\obj\Debug\net8.0\AdventOfCode2023.pdb
 C:\Storage\jobbmaterial\Dev\AdventOfCode2023\obj\Debug\net8.0\AdventOfCode2023.genruntimeconfig.cache
 C:\Storage\jobbmaterial\Dev\AdventOfCode2023\obj\Debug\net8.0\ref\AdventOfCode2023.dll
+C:\Storage\jobbmaterial\Dev\AdventOfCode2023\obj\Debug\net8.0\AdventOfCode2023.sourcelink.json
