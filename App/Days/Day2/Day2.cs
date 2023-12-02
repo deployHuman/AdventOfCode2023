@@ -16,15 +16,15 @@ namespace AdventOfCode2023.App.Days
 
             if (!File.Exists(ProblemInput))
             {
-                Console.WriteLine("Could not find input file for this day!");
-                Console.WriteLine("Expected file at: " + ProblemInput);
+                Functions.DebugPrint("Could not find input file for this day!");
+                Functions.DebugPrint("Expected file at: " + ProblemInput);
                 throw new Exception("Could not find input file for this day!");
             }
             AllLines = File.ReadAllLines(ProblemInput);
 
             if (AllLines == null || AllLines.Length == 0)
             {
-                Console.WriteLine("Input file is empty!");
+                Functions.DebugPrint("Input file is empty!");
                 throw new Exception("Input file is empty!");
             }
 
@@ -41,19 +41,19 @@ namespace AdventOfCode2023.App.Days
                 SingleGameOfCubes? NewGame = TranslateLineToGame(SingleLine);
                 if (NewGame == null)
                 {
-                    Console.WriteLine("Could not translate line to game: " + SingleLine);
+                    Functions.DebugPrint("Could not translate line to game: " + SingleLine);
                     throw new Exception("Could not translate line to game: " + SingleLine);
                 }
                 AllGames.Add(NewGame);
 
                 if (AllGames.Last().IsItPossible(12, 13, 14))
                 {
-                    // Console.WriteLine("Game " + AllGames.Last().GameNumber + " is possible");
+                    Functions.DebugPrint("Game " + AllGames.Last().GameNumber + " is possible");
                     TotalPossibleGamesAndItsIntScore += AllGames.Last().GameNumber;
                 }
             }
 
-            Console.WriteLine("Total possible games sum of Int: " + TotalPossibleGamesAndItsIntScore);
+            Functions.PrintResult(TotalPossibleGamesAndItsIntScore.ToString(), "2", "1");
             //Answer:  5050 too high    
             //Answer: 2#: 2716 Is correct
 
@@ -77,7 +77,7 @@ namespace AdventOfCode2023.App.Days
 
             }
 
-            Console.WriteLine("Sum of the power of the lowest possible cube score: " + SumOfthePowerOfLowestPossibleCubeScore);
+            Functions.PrintResult(SumOfthePowerOfLowestPossibleCubeScore.ToString(), "2", "2");
             //Answer: 1#: 2735 too low
             //Answer: 2#:  72227 Is correct
 
@@ -124,13 +124,13 @@ namespace AdventOfCode2023.App.Days
                         continue;
                     }
 
-                    Console.WriteLine("Unknown cube color: " + CubeColor);
+                    Functions.DebugPrint("Unknown cube color: " + CubeColor);
                     throw new Exception("Unknown cube color: " + CubeColor);
 
                 }
             }
 
-            // Console.WriteLine("Game Number: " + ReturnGame.GameNumber + " has Sets: " + ReturnGame.GreenCubes.Count);
+            Functions.DebugPrint("Game Number: " + ReturnGame.GameNumber + " has Sets: " + ReturnGame.GreenCubes.Count);
 
             return ReturnGame;
 

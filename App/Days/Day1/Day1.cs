@@ -14,15 +14,15 @@ namespace AdventOfCode2023.App.Days
 
             if (!File.Exists(ProblemInput))
             {
-                Console.WriteLine("Could not find input file for this day!");
-                Console.WriteLine("Expected file at: " + ProblemInput);
+                Functions.DebugPrint("Could not find input file for this day!");
+                Functions.DebugPrint("Expected file at: " + ProblemInput);
                 throw new Exception("Could not find input file for this day!");
             }
             AllLines = File.ReadAllLines(ProblemInput);
 
             if (AllLines == null || AllLines.Length == 0)
             {
-                Console.WriteLine("Input file is empty!");
+                Functions.DebugPrint("Input file is empty!");
                 throw new Exception("Input file is empty!");
             }
 
@@ -30,7 +30,7 @@ namespace AdventOfCode2023.App.Days
 
         public override void Part1()
         {
-            Console.WriteLine("Part1 Answer: " + CalculateResultNumber(AllLines));
+            Functions.PrintResult(CalculateResultNumber(AllLines), "1", "1");
             //1#: 6490 is too low
             //2#  35776 is too low
             //3#  54630  - Correct!
@@ -42,11 +42,11 @@ namespace AdventOfCode2023.App.Days
 
             for (int i = 0; i < AllLines.Length; i++)
             {
-                Console.WriteLine("Line: " + AllLines[i] + " Becomes: " + ConvertAllNumbersToDigitsInString(AllLines[i]));
+                // Functions.DebugPrint("Line: " + AllLines[i] + " Becomes: " + ConvertAllNumbersToDigitsInString(AllLines[i]));
                 SumString[i] = ConvertAllNumbersToDigitsInString(AllLines[i]);
             }
 
-            Console.WriteLine("Part2 Answer: " + CalculateResultNumber(SumString));
+            Functions.PrintResult(CalculateResultNumber(SumString), "1", "2");
             //1# 54014 too low
             //2#  54520  too low
             //3#  54770  - Correct!
@@ -68,7 +68,7 @@ namespace AdventOfCode2023.App.Days
                 string FirstNumber = resulst[0].ToString();
                 string LastNumber = resulst[resulst.Length - 1].ToString();
 
-                // Console.WriteLine("Result: " + FirstNumber + " & " + LastNumber + " = " + Convert.ToInt16(FirstNumber.ToString() + LastNumber.ToString()));
+                // Functions.DebugPrint("Result: " + FirstNumber + " & " + LastNumber + " = " + Convert.ToInt16(FirstNumber.ToString() + LastNumber.ToString()));
                 SumReturn += Convert.ToInt16(FirstNumber.ToString() + LastNumber.ToString());
             }
 
