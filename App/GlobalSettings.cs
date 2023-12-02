@@ -1,6 +1,16 @@
 
+using System.Reflection;
+
 public class GlobalSettings
 {
-    public static readonly string BasePath = @"C:\Storage\jobbmaterial\Dev\AdventOfCode2023\";
+    public static string GetBasePath()
+    {
+        //return where this file is located
+        string path = Assembly.GetExecutingAssembly().Location;
+
+        path = path.Substring(0, path.IndexOf("bin"));
+
+        return path;
+    }
 }
 

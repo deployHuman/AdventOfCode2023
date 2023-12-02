@@ -7,6 +7,7 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        Functions.RunDayProblem(null);
         Menu.StartScreen(args);
     }
 }

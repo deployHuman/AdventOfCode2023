@@ -7,7 +7,6 @@ public class Menu
 {
     public static void StartScreen(string[]? args = null)
     {
-        // Console.Clear();
         Console.WriteLine("Hello and Welcome to Advent of Code 2023!");
         Console.WriteLine("Please select a day to run:");
         string dayPathClassCheck = "";
@@ -16,7 +15,7 @@ public class Menu
         {
             //check if the file exists
             dayPathClassCheck = @"App\Days\Day" + i + @"\Day" + i + ".cs";
-            if (!File.Exists(GlobalSettings.BasePath + dayPathClassCheck))
+            if (!File.Exists(GlobalSettings.GetBasePath() + dayPathClassCheck))
             {
                 continue;
             }
@@ -47,45 +46,8 @@ public class Menu
             return;
         }
 
-        Console.WriteLine("Running Day " + day);
+        Functions.RunDayProblem(day);
 
-        string dayString = day.ToString();
-
-        string dayPath = @"App\Days\Day" + dayString + @"\Day" + dayString + ".cs";
-
-        //dynamically load the class using the name of the class
-
-        if (!File.Exists(GlobalSettings.BasePath + dayPath))
-        {
-            Console.WriteLine("Could not find Class file for that day");
-            Console.WriteLine("Please make sure the file exists at: " + GlobalSettings.BasePath + dayPath + "\n\n\n");
-            Menu.StartScreen(args);
-            return;
-        }
-
-
-        object? DayObject = Functions.CreateNewDynamicDayObject(dayString);
-
-        if (DayObject == null)
-        {
-            Console.WriteLine("Invalid input\n\n\n");
-            Menu.StartScreen(args);
-            return;
-        }
-
-        MethodInfo? runTestsMethod = DayObject.GetType().GetMethod("SolveProblems");
-
-        if (runTestsMethod == null)
-        {
-            Console.WriteLine("Could not find That days SolveProblems method\n\n\n");
-            Menu.StartScreen(args);
-            return;
-        }
-
-        runTestsMethod.Invoke(DayObject, null);
-
-        Console.WriteLine("Tests completed, Returning to main menu");
-        Console.WriteLine("#######################################################\n\n\n");
         Menu.StartScreen(args);
 
     }

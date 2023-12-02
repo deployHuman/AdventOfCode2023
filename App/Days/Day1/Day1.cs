@@ -10,7 +10,7 @@ namespace AdventOfCode2023.App.Days
 
         public Day1()
         {
-            ProblemInput = GlobalSettings.BasePath + GetDayRootPath() + "InputProblem1.txt";
+            ProblemInput = GlobalSettings.GetBasePath() + GetDayRootPath() + "InputProblem1.txt";
 
             if (!File.Exists(ProblemInput))
             {
