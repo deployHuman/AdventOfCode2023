@@ -62,6 +62,25 @@ namespace AdventOfCode2023.App.Days
 
         public override void Part2()
         {
+            AllGames.Clear();
+            int SumOfthePowerOfLowestPossibleCubeScore = 0;
+
+            foreach (string SingleLine in AllLines)
+            {
+                SingleGameOfCubes? NewGame = TranslateLineToGame(SingleLine);
+                if (NewGame == null)
+                {
+                    throw new Exception("Could not translate line to game: " + SingleLine);
+                }
+                AllGames.Add(NewGame);
+                SumOfthePowerOfLowestPossibleCubeScore += AllGames.Last().LowestPossibleCubeScore();
+
+            }
+
+            Console.WriteLine("Sum of the power of the lowest possible cube score: " + SumOfthePowerOfLowestPossibleCubeScore);
+            //Answer: 1#: 2735 too low
+            //Answer: 2#:  72227 Is correct
+
         }
 
         private SingleGameOfCubes? TranslateLineToGame(string TextLine)
@@ -127,6 +146,41 @@ namespace AdventOfCode2023.App.Days
             public List<int> GreenCubes = new();
 
             public List<int> BlueCubes = new();
+
+
+            public int LowestPossibleCubeScore()
+            {
+                int LowestRedCubes = 0;
+                int LowestGreenCubes = 0;
+                int LowestBlueCubes = 0;
+
+                foreach (int SingleRedCube in RedCubes)
+                {
+                    if (SingleRedCube > LowestRedCubes)
+                    {
+                        LowestRedCubes = SingleRedCube;
+                    }
+                }
+
+                foreach (int SingleGreenCube in GreenCubes)
+                {
+                    if (SingleGreenCube > LowestGreenCubes)
+                    {
+                        LowestGreenCubes = SingleGreenCube;
+                    }
+                }
+
+                foreach (int SingleBlueCube in BlueCubes)
+                {
+                    if (SingleBlueCube > LowestBlueCubes)
+                    {
+                        LowestBlueCubes = SingleBlueCube;
+                    }
+                }
+
+                return LowestRedCubes * LowestGreenCubes * LowestBlueCubes;
+
+            }
 
             public bool IsItPossible(int MaxRedCubes = 0, int MaxGreenCubes = 0, int MaxBlueCubes = 0)
             {
