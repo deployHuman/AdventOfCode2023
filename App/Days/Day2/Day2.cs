@@ -48,7 +48,7 @@ namespace AdventOfCode2023.App.Days
 
                 if (AllGames.Last().IsItPossible(12, 13, 14))
                 {
-                    Console.WriteLine("Game " + AllGames.Last().GameNumber + " is possible");
+                    // Console.WriteLine("Game " + AllGames.Last().GameNumber + " is possible");
                     TotalPossibleGamesAndItsIntScore += AllGames.Last().GameNumber;
                 }
             }
@@ -91,24 +91,27 @@ namespace AdventOfCode2023.App.Days
                     if (CubeColor.Contains("red"))
                     {
                         ReturnGame.RedCubes.Add(int.Parse(CubeColor.Replace("red", "").Trim()));
+                        continue;
                     }
-                    else if (CubeColor.Contains("green"))
+                    if (CubeColor.Contains("green"))
                     {
                         ReturnGame.GreenCubes.Add(int.Parse(CubeColor.Replace("green", "").Trim()));
+                        continue;
+
                     }
-                    else if (CubeColor.Contains("blue"))
+                    if (CubeColor.Contains("blue"))
                     {
                         ReturnGame.BlueCubes.Add(int.Parse(CubeColor.Replace("blue", "").Trim()));
+                        continue;
                     }
-                    else
-                    {
-                        Console.WriteLine("Unknown cube color: " + CubeColor);
-                        throw new Exception("Unknown cube color: " + CubeColor);
-                    }
+
+                    Console.WriteLine("Unknown cube color: " + CubeColor);
+                    throw new Exception("Unknown cube color: " + CubeColor);
+
                 }
             }
 
-            Console.WriteLine("Game Number: " + ReturnGame.GameNumber + " has Sets: " + ReturnGame.GreenCubes.Count);
+            // Console.WriteLine("Game Number: " + ReturnGame.GameNumber + " has Sets: " + ReturnGame.GreenCubes.Count);
 
             return ReturnGame;
 
