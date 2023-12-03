@@ -3,7 +3,7 @@ using System.Reflection;
 
 public class GlobalSettings
 {
-    public static bool DebugMode = false;
+    public static bool DebugMode = true;
     public static string GetBasePath()
     {
         //return where this file is located

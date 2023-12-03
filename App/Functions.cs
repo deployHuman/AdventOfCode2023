@@ -13,9 +13,9 @@ public class Functions
         }
     }
 
-    public static void PrintResult(string? Result, String DayNumber, string PartNumber)
+    public static void PrintResult(string? Result, int DayNumber, int PartNumber)
     {
-        Console.WriteLine("Day " + DayNumber + " Part " + PartNumber + " Result: " + Result);
+        Console.WriteLine("Day " + DayNumber.ToString() + " Part " + PartNumber.ToString() + " Result: " + Result);
     }
 
     public static void RunDayProblem(int? WhatDayToRun)

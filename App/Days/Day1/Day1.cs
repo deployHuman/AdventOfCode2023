@@ -30,7 +30,7 @@ namespace AdventOfCode2023.App.Days
 
         public override void Part1()
         {
-            Functions.PrintResult(CalculateResultNumber(AllLines), "1", "1");
+            Functions.PrintResult(CalculateResultNumber(AllLines), 1, 1);
             //1#: 6490 is too low
             //2#  35776 is too low
             //3#  54630  - Correct!
@@ -46,7 +46,7 @@ namespace AdventOfCode2023.App.Days
                 SumString[i] = ConvertAllNumbersToDigitsInString(AllLines[i]);
             }
 
-            Functions.PrintResult(CalculateResultNumber(SumString), "1", "2");
+            Functions.PrintResult(CalculateResultNumber(SumString), 1, 2);
             //1# 54014 too low
             //2#  54520  too low
             //3#  54770  - Correct!

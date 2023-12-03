@@ -53,7 +53,7 @@ namespace AdventOfCode2023.App.Days
                 }
             }
 
-            Functions.PrintResult(TotalPossibleGamesAndItsIntScore.ToString(), "2", "1");
+            Functions.PrintResult(TotalPossibleGamesAndItsIntScore.ToString(), 2, 1);
             //Answer:  5050 too high    
             //Answer: 2#: 2716 Is correct
 
@@ -77,7 +77,7 @@ namespace AdventOfCode2023.App.Days
 
             }
 
-            Functions.PrintResult(SumOfthePowerOfLowestPossibleCubeScore.ToString(), "2", "2");
+            Functions.PrintResult(SumOfthePowerOfLowestPossibleCubeScore.ToString(), 2,2);
             //Answer: 1#: 2735 too low
             //Answer: 2#:  72227 Is correct
 
