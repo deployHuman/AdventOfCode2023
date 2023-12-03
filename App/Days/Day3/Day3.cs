@@ -5,7 +5,7 @@ namespace AdventOfCode2023.App.Days
 {
     public class Day3 : EveryDay, DayTest
     {
-        public Dictionary<int, Dictionary<int, string>> TheWholeMap = new();
+        public static Dictionary<int, Dictionary<int, string>> TheWholeMap = new();
 
         public List<NumberGroup> AllNumberGroups = new();
 
@@ -15,7 +15,6 @@ namespace AdventOfCode2023.App.Days
             ReadInAsMap();
             SetAllNumbersFromLines();
         }
-
         private void ReadInAsMap()
         {
             int x = 0;
@@ -81,6 +80,7 @@ namespace AdventOfCode2023.App.Days
             }
             Functions.PrintResult(TotalSumOfParts.ToString(), 3, 1);
             //409423 is too low
+            //556057 is right!
         }
 
         private bool DoesItContainAPart(string AdjacenContent)
@@ -122,35 +122,43 @@ namespace AdventOfCode2023.App.Days
 
             public void CalculateAdjecent()
             {
-                //before the number on the left
-                AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X - 1, Y = StartingCoordinate.Y });
-
-                //before the number on the left, one up
-                AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X - 1, Y = StartingCoordinate.Y - 1 });
-
-                //before the number on the left, one down
-                AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X - 1, Y = StartingCoordinate.Y + 1 });
-
-                //after the number on the right
-                AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + Number.ToString().Length + 1, Y = StartingCoordinate.Y });
-
-                //after the number on the right, one up
-                AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + Number.ToString().Length + 1, Y = StartingCoordinate.Y - 1 });
-
-                //after the number on the right, one down
-                AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + Number.ToString().Length + 1, Y = StartingCoordinate.Y + 1 });
-
-                //above the number
-                for (int i = 0; i < Number.ToString().Length; i++)
+                if (StartingCoordinate.X > 0)
                 {
-                    AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + i, Y = StartingCoordinate.Y - 1 });
+                    //before the number on the left
+                    AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X - 1, Y = StartingCoordinate.Y });
+
+                    //before the number on the left, one up
+                    AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X - 1, Y = StartingCoordinate.Y - 1 });
+
+                    //before the number on the left, one down
+                    AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X - 1, Y = StartingCoordinate.Y + 1 });
                 }
 
-                //below the number
+                if ((StartingCoordinate.X + Number.ToString().Length) < Day3.TheWholeMap.Keys.Max())
+                {
+                    //after the number on the right
+                    AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + Number.ToString().Length, Y = StartingCoordinate.Y });
+
+                    //after the number on the right, one up
+                    AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + Number.ToString().Length, Y = StartingCoordinate.Y - 1 });
+
+                    //after the number on the right, one down
+                    AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + Number.ToString().Length, Y = StartingCoordinate.Y + 1 });
+                }
+
                 for (int i = 0; i < Number.ToString().Length; i++)
                 {
+                    if (StartingCoordinate.X > 0)
+                    {
+                        //above the number
+                        AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + i, Y = StartingCoordinate.Y - 1 });
+                    }
+
+                    //below the number
                     AdjacentCoords.Add(new Coordinate { X = StartingCoordinate.X + i, Y = StartingCoordinate.Y + 1 });
                 }
+
+
             }
         }
 
