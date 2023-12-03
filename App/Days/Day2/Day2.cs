@@ -4,10 +4,6 @@ namespace AdventOfCode2023.App.Days
 {
     public class Day2 : EveryDay, DayTest
     {
-        public static string ProblemInput = "";
-
-        public static string[] AllLines = [];
-
         public static List<SingleGameOfCubes> AllGames = new();
 
         public Day2()
@@ -77,7 +73,7 @@ namespace AdventOfCode2023.App.Days
 
             }
 
-            Functions.PrintResult(SumOfthePowerOfLowestPossibleCubeScore.ToString(), 2,2);
+            Functions.PrintResult(SumOfthePowerOfLowestPossibleCubeScore.ToString(), 2, 2);
             //Answer: 1#: 2735 too low
             //Answer: 2#:  72227 Is correct
 

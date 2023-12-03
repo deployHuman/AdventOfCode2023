@@ -4,10 +4,6 @@ namespace AdventOfCode2023.App.Days
 {
     public class Day1 : EveryDay, DayTest
     {
-        public static string ProblemInput = "";
-
-        public static string[] AllLines = [];
-
         public Day1()
         {
             ProblemInput = GlobalSettings.GetBasePath() + GetDayRootPath() + "InputProblem1.txt";
