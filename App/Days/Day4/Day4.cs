@@ -106,7 +106,7 @@ namespace AdventOfCode2023.App.Days
                 Functions.DebugPrint("Card " + card.Key + " has " + card.Value.Count() + " winning cards");
             }
 
-            Functions.DebugPrint("Total Cards: " + TotalCards);
+            Functions.PrintResult(TotalCards.ToString(), 4, 2);
             //901 too low
             //1499 too low
             //3017 too low
