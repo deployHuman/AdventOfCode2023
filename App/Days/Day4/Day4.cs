@@ -49,7 +49,6 @@ namespace AdventOfCode2023.App.Days
             {
                 ScratchCard card = new();
                 var cardNumber = Regex.Match(line, @"Card\s+(\d+):");
-                Functions.DebugPrint("Found Card: " + cardNumber.Groups[1].Value);
                 card.CardNumber = int.Parse(cardNumber.Groups[1].Value);
 
                 Match numbers = Regex.Match(line, @"Card\s+\d+:\s+(.*)\s+\|\s+(.*)");
@@ -100,8 +99,21 @@ namespace AdventOfCode2023.App.Days
 
         public override void Part2()
         {
+            Functions.DebugPrint("Part 2");
             CopyOverAllWinningCards();
             CreateAllCopysOfCards();
+
+            int TotalCards = 0;
+            foreach (KeyValuePair<int, List<ScratchCard>> card in OnlyWinningCards)
+            {
+                TotalCards += card.Value.Count();
+                Functions.DebugPrint("Card " + card.Key + " has " + card.Value.Count() + " winning cards");
+            }
+
+            Functions.DebugPrint("Total Cards: " + TotalCards);
+            //901 too low
+            //1499 too low
+            //3017 too low
 
         }
 
@@ -115,51 +127,59 @@ namespace AdventOfCode2023.App.Days
                     OnlyWinningCards.Add(card.Key, [card.Value.First()]);
                 }
             }
+            Functions.DebugPrint("Total Winning Cards: " + OnlyWinningCards.Count);
         }
 
-        private int CreateAllCopysOfCards()
+        private void CreateAllCopysOfCards()
         {
             int TotalDuplicatesCreated = 0;
-            Dictionary<int, List<ScratchCard>> DicToBeCopiedFrom = new();
+            int CurrentNumberOfCards = OnlyWinningCards.Count();
+            Functions.DebugPrint("Current Number of Cards to loop over: " + CurrentNumberOfCards);
 
-            foreach (var cards in OnlyWinningCards)
+            //we cant use Foreach as we are adding to the dictionary we are looping through 
+            //so instead we use a for-i and loop through the number of cards we have and simaltaniously add to the dictionary
+
+            for (int i = 0; i < CurrentNumberOfCards; i++)
             {
+                List<ScratchCard> CurrentCard = OnlyWinningCards[i];
+                int NumberOfScratches = CurrentCard.Count();
+                Functions.DebugPrint("Current Card: " + CurrentCard.First().CardNumber + " has " + NumberOfScratches + " scratches");
 
-                foreach (var SingleCard in cards.Value)
+                // Each Ticket inside the current card
+                for (int X = 0; X < NumberOfScratches; X++)
                 {
-
-                    DicToBeCopiedFrom.Add(SingleCard.CardNumber, [SingleCard]);
-
-                    if (SingleCard.HasBeenEvaluated == true)
+                    if (CurrentCard.ElementAt(X).HasBeenEvaluated == true)
                     {
+                        //next for X
                         continue;
                     }
 
-                    int NumberOfCopys = SingleCard.NumberOfMatches;
+                    CurrentCard.ElementAt(X).HasBeenEvaluated = true;
 
-                    for (int i = 0; i < NumberOfCopys; i++)
+                    for (int NewLotts = 1; NewLotts < CurrentCard.ElementAt(X).NumberOfMatches + 1; NewLotts++)
                     {
-                        ScratchCard newCard = OnlyWinningCards[SingleCard.CardNumber + i].First();
-                        newCard.HasBeenEvaluated = false;
-
-                        if (OnlyWinningCards.ContainsKey(newCard.CardNumber) == false)
+                        if (OnlyWinningCards.ContainsKey(i + NewLotts) == false)
                         {
-                            OnlyWinningCards.Add(newCard.CardNumber, [newCard]);
-                        }
-                        else
-                        {
-                            OnlyWinningCards[newCard.CardNumber].Add(newCard);
+                            // Functions.DebugPrint("Reached an end of what we can copy over, at " + i + " and " + NewLotts + " so we are done with this card");
+                            continue;
                         }
 
+                        ScratchCard NewCard = OnlyWinningCards[i + NewLotts].First();
+                        NewCard.HasBeenEvaluated = false;
+                        OnlyWinningCards[NewCard.CardNumber].Add(NewCard);
                         TotalDuplicatesCreated++;
                     }
-                    SingleCard.HasBeenEvaluated = true;
                 }
-
 
             }
 
-            return TotalDuplicatesCreated;
+            // if (TotalDuplicatesCreated > 0)
+            // {
+            //     CreateAllCopysOfCards();
+
+            // }
+
+
         }
 
 
