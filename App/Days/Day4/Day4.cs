@@ -14,8 +14,6 @@ namespace AdventOfCode2023.App.Days
 
         Dictionary<int, List<ScratchCard>> AllCards = new();
 
-        Dictionary<int, List<ScratchCard>> OnlyWinningCards = new();
-
         public class ScratchCard()
         {
 
@@ -28,8 +26,6 @@ namespace AdventOfCode2023.App.Days
             public int Part1Score { get; set; } = 0;
 
             public int NumberOfMatches { get; set; } = 0;
-
-            public bool HasBeenEvaluated { get; set; } = false;
 
         }
 
@@ -100,11 +96,11 @@ namespace AdventOfCode2023.App.Days
         public override void Part2()
         {
             Functions.DebugPrint("Part 2");
-            CopyOverAllWinningCards();
+
             CreateAllCopysOfCards();
 
             int TotalCards = 0;
-            foreach (KeyValuePair<int, List<ScratchCard>> card in OnlyWinningCards)
+            foreach (KeyValuePair<int, List<ScratchCard>> card in AllCards)
             {
                 TotalCards += card.Value.Count();
                 Functions.DebugPrint("Card " + card.Key + " has " + card.Value.Count() + " winning cards");
@@ -114,77 +110,43 @@ namespace AdventOfCode2023.App.Days
             //901 too low
             //1499 too low
             //3017 too low
+            //6283755 correct
 
-        }
-
-        private void CopyOverAllWinningCards()
-        {
-            OnlyWinningCards.Clear();
-            foreach (var card in AllCards)
-            {
-                if (card.Value.First().NumberOfMatches > 0)
-                {
-                    OnlyWinningCards.Add(card.Key, [card.Value.First()]);
-                }
-            }
-            Functions.DebugPrint("Total Winning Cards: " + OnlyWinningCards.Count);
         }
 
         private void CreateAllCopysOfCards()
         {
-            int TotalDuplicatesCreated = 0;
-            int CurrentNumberOfCards = OnlyWinningCards.Count();
+
+            int CurrentNumberOfCards = AllCards.Count();
             Functions.DebugPrint("Current Number of Cards to loop over: " + CurrentNumberOfCards);
 
             //we cant use Foreach as we are adding to the dictionary we are looping through 
             //so instead we use a for-i and loop through the number of cards we have and simaltaniously add to the dictionary
 
-            for (int i = 0; i < CurrentNumberOfCards; i++)
+            for (int i = 1; i < CurrentNumberOfCards; i++)
             {
-                List<ScratchCard> CurrentCard = OnlyWinningCards[i];
+                List<ScratchCard> CurrentCard = AllCards[i];
                 int NumberOfScratches = CurrentCard.Count();
                 Functions.DebugPrint("Current Card: " + CurrentCard.First().CardNumber + " has " + NumberOfScratches + " scratches");
 
                 // Each Ticket inside the current card
                 for (int X = 0; X < NumberOfScratches; X++)
                 {
-                    if (CurrentCard.ElementAt(X).HasBeenEvaluated == true)
-                    {
-                        //next for X
-                        continue;
-                    }
-
-                    CurrentCard.ElementAt(X).HasBeenEvaluated = true;
-
                     for (int NewLotts = 1; NewLotts < CurrentCard.ElementAt(X).NumberOfMatches + 1; NewLotts++)
                     {
-                        if (OnlyWinningCards.ContainsKey(i + NewLotts) == false)
+                        if (AllCards.Count() < (i + NewLotts))
                         {
-                            // Functions.DebugPrint("Reached an end of what we can copy over, at " + i + " and " + NewLotts + " so we are done with this card");
                             continue;
                         }
+                        ScratchCard NewCard = AllCards[i + NewLotts].First();
+                        AllCards[NewCard.CardNumber].Add(NewCard);
 
-                        ScratchCard NewCard = OnlyWinningCards[i + NewLotts].First();
-                        NewCard.HasBeenEvaluated = false;
-                        OnlyWinningCards[NewCard.CardNumber].Add(NewCard);
-                        TotalDuplicatesCreated++;
                     }
                 }
 
             }
 
-            // if (TotalDuplicatesCreated > 0)
-            // {
-            //     CreateAllCopysOfCards();
-
-            // }
-
-
         }
-
-
     }
-
-
 
 }
